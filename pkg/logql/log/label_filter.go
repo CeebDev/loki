@@ -368,6 +368,14 @@ type lineFilterLabelFilter struct {
 	filter Filterer
 }
 
+// overrides the matcher.String() function in case there is a regexpFilter
+func (s *lineFilterLabelFilter) String() string {
+	if unwrappedFilter, ok := s.filter.(regexpFilter); ok {
+		return fmt.Sprintf("%s%s%s", s.Matcher.Name, s.Matcher.Type, unwrappedFilter.String())
+	}
+	return s.Matcher.String()
+}
+
 func (s *lineFilterLabelFilter) Process(_ int64, line []byte, lbs *LabelsBuilder) ([]byte, bool) {
 	v := labelValue(s.Name, lbs)
 	return line, s.filter.Filter(unsafeGetBytes(v))

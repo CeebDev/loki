@@ -3469,10 +3469,9 @@ func TestNoOpLabelToString(t *testing.T) {
 // Tests that the regex part of expr doesn't get doubly escaped when we call expr.String()
 func TestParseSampleExpr_String(t *testing.T) {
 	query := `sum(rate({cluster="beep", namespace="boop"} | msg=~` + "`" + `.*?(GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS) /loki/api/(?i)(\d+[a-z]|[a-z]+\d)\w*/query_range` + "`" + `[1d]))`
-	require.True(t, len(query) < 5120)
 	expr, err := ParseSampleExpr(query)
 	require.NoError(t, err)
-	// need to change some backticks to "
+	// need to change some backticks to " in order for query to be exactly equal to expr.String(), otherwise it's the same query
 	query = `sum(rate({cluster="beep", namespace="boop"} | msg=~` + `"` + `.*?(GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS) /loki/api/(?i)(\d+[a-z]|[a-z]+\d)\w*/query_range` + `"` + `[1d]))`
 	require.Equal(t, query, expr.String())
 }

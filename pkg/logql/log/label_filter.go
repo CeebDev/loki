@@ -371,7 +371,9 @@ type lineFilterLabelFilter struct {
 // overrides the matcher.String() function in case there is a regexpFilter
 func (s *lineFilterLabelFilter) String() string {
 	if unwrappedFilter, ok := s.filter.(regexpFilter); ok {
-		return fmt.Sprintf("%s%s%s", s.Matcher.Name, s.Matcher.Type, unwrappedFilter.String())
+		rStr := unwrappedFilter.String()
+		str := fmt.Sprintf(`%s%s"%s"`, s.Matcher.Name, s.Matcher.Type, rStr)
+		return str
 	}
 	return s.Matcher.String()
 }

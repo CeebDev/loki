@@ -30,7 +30,7 @@ services:
   grafana:
     image: grafana/grafana:9.1.6
     ports:
-      - "3000:3000"
+      - "3030:3030"
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"

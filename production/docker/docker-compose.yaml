@@ -97,7 +97,7 @@ services:
       - MINIO_PROMETHEUS_AUTH_TYPE=public
       - MINIO_UPDATE=off
     ports:
-      - "9000:9000"
+      - "10000:10000"
     volumes:
       - ./.data/minio:/data
     networks:
